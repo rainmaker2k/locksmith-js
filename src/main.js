@@ -79,7 +79,7 @@ export async function retrieveBookmarks() {
                 value: {
                     roleName: b.role_name,
                     accountNumber: b.account_number,
-                    accountName: b.account_name,
+                    accountName: b.name,
                     mfaSerial: credentials.locksmith.mfa_serial
                 }
             }))
