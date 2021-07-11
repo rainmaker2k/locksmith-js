@@ -11,7 +11,7 @@ export async function setupAws(options) {
     var credentials = new AWS.SharedIniFileCredentials({ profile: 'locksmith' });
     AWS.config.update({ region: 'REGION', credentials: credentials });
 
-    var roleToAssume = {
+    const roleToAssume = {
         RoleArn: `arn:aws:iam::${options.account.accountNumber}:role/${options.account.roleName}`,
         RoleSessionName: 'AssumeRoleSession',
         SerialNumber: options.account.mfaSerial,
@@ -19,10 +19,8 @@ export async function setupAws(options) {
         DurationSeconds: 3600,
     };
 
-    var roleCreds;
-
     // Create the STS service object    
-    var sts = new AWS.STS({ apiVersion: '2011-06-15' });
+    const sts = new AWS.STS({ apiVersion: '2011-06-15' });
 
     //Assume Role
     try {
@@ -53,8 +51,6 @@ export async function setupAws(options) {
     } catch (err) {
         console.error(err)
     }
-    
-
 }
 
 export async function retrieveBookmarks() {
@@ -62,8 +58,6 @@ export async function retrieveBookmarks() {
     
     const credentialsfile = fs.readFileSync(homedir + "\\.aws\\credentials", 'utf-8');
     const credentials = ini.parse(credentialsfile);
-    console.log(credentials);
-    console.log(credentials.locksmith.beagle_url);
     try {
         
         const { body } = await got(credentials.locksmith.beagle_url, { 
