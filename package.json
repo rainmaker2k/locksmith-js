@@ -1,7 +1,7 @@
 {
   "name": "locksmith-js",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Locksmith",
   "main": "src/index.js",
   "bin": {
     "@rainmaker2k/locksmith": "bin/locksmith",

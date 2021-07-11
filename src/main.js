@@ -83,11 +83,11 @@ export async function retrieveBookmarks() {
     return [];
 }
 
-function shell(options) {
+export function shell(options) {
     const customShell = process.env.LOCKSMITH_SHELL; 
     
     if (customShell) {
-        return spawn(customShell, [], {
+        return spawn(customShell, ["-NoExit", "-command", "function prompt { \"PS[$([char]27)[31m$env:AWS_SESSION_ACCOUNT_NAME $([char]27)[33m($env:AWS_SESSION_ACCOUNT_ID#)$([char]27)[37m] >\" }"], {
             ...options,
             stdio: 'inherit'
         })
@@ -102,6 +102,7 @@ function shell(options) {
     }
 
     return spawn(process.env.comspec || 'cmd.exe', [], {
+        ...options,
         stdio: 'inherit'
     })
 }
