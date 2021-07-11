@@ -60,7 +60,7 @@ export async function setupAws(options) {
 export async function retrieveBookmarks() {
     const homedir = os.homedir();
     
-    const credentialsfile = fs.readFileSync(homedir + "\\.aws\\credentials", 'utf-8');
+    const credentialsfile = fs.readFileSync(homedir + "/.aws/credentials", 'utf-8');
     const credentials = ini.parse(credentialsfile);
     console.log(credentials);
     console.log(credentials.locksmith.beagle_url);
