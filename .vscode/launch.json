@@ -12,7 +12,10 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/bin/locksmith",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env": {
+                "LOCKSMITH_SHELL": "pwsh"
+            }
         }
     ]
 }

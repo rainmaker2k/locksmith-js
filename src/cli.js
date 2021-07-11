@@ -38,8 +38,6 @@ export async function cli(args) {
         }
     ]);
 
-    setupAws(response)
-
-    console.log(response);
+    await setupAws(response)
 
 }

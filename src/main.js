@@ -26,8 +26,7 @@ export async function setupAws(options) {
     try {
         const assumedRole = await sts.assumeRole(roleToAssume).promise();
 
-        const spawnProc = spawn("pwsh", [], {
-            stdio: "inherit",
+        const spawnProc = shell({
             env: {
                 ...process.env,
                 AWS_ACCESS_KEY_ID: assumedRole.Credentials.AccessKeyId,
@@ -82,4 +81,27 @@ export async function retrieveBookmarks() {
     }
 
     return [];
+}
+
+function shell(options) {
+    const customShell = process.env.LOCKSMITH_SHELL; 
+    
+    if (customShell) {
+        return spawn(customShell, [], {
+            ...options,
+            stdio: 'inherit'
+        })
+    }
+
+    if (process.platform !== 'win32') {
+        var shell = os.platform() === 'android' ? 'sh' : '/bin/sh'
+        return spawn(shell, [], {
+            ...options,
+            stdio: 'inherit'
+        })
+    }
+
+    return spawn(process.env.comspec || 'cmd.exe', [], {
+        stdio: 'inherit'
+    })
 }
