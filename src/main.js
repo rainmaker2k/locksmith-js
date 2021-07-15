@@ -39,6 +39,7 @@ export async function setupAws(options) {
                 AWS_SESSION_TOKEN: assumedRole.Credentials.SessionToken,
                 AWS_SESSION_USER_ARN: assumedRole.AssumedRoleUser.Arn,
                 AWS_SESSION_USER_ID: assumedRole.AssumedRoleUser.AssumedRoleId,
+                PS1: "\\[\\e[31m\\]" + options.account.accountNumber + "\\[\\e[m\\]: \\[\\e[33m\\]" + options.account.accountName + " \\[\\e[31m\\]\\w\\[\\e[m\\] $ "
             }
         })
 
@@ -94,8 +95,8 @@ export function shell(options) {
     }
 
     if (process.platform !== 'win32') {
-        var shell = os.platform() === 'android' ? 'sh' : '/bin/sh'
-        return spawn(shell, [], {
+        var shell = os.platform() === 'android' ? 'sh' : '/bin/bash'
+        return spawn(shell, ['--noprofile', '-l'], {
             ...options,
             stdio: 'inherit'
         })
